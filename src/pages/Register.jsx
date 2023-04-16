@@ -14,9 +14,19 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import {FormHelperText} from '@mui/material';
+import {useForm} from 'react-hook-form';
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
+	const {
+		register,
+		formState: {errors},
+		handleSubmit,
+		reset,
+	} = useForm({
+		mode: 'onBlur',
+	});
 
 	const handleClickShowPassword = () => setShowPassword(show => !show);
 
@@ -24,16 +34,9 @@ const Register = () => {
 		event.preventDefault();
 	};
 
-	const handleSubmit = event => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-		console.log({
-			firstName: data.get('firstName'),
-			lastName: data.get('lastName'),
-			email: data.get('email'),
-			password: data.get('password'),
-			avatar: data.get('avatar'),
-		});
+	const onSubmit = data => {
+		console.log(JSON.stringify(data));
+		reset();
 	};
 
 	return (
@@ -69,39 +72,74 @@ const Register = () => {
 					<Typography component='h1' variant='h5'>
 						Реєстрація
 					</Typography>
-					<Box component='form' onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+					<Box
+						component='form'
+						onSubmit={handleSubmit(onSubmit)}
+						noValidate
+						sx={{mt: 1}}
+					>
 						<TextField
 							margin='normal'
-							required
 							fullWidth
 							label="Ім'я"
-							name='firstName'
 							autoComplete='none'
-							autoFocus
+							{...register('firstName', {
+								required: "Поле є обов'язковим",
+								minLength: {
+									value: 2,
+									message: "Ім'я не може бути коротше 2 символів",
+								},
+								pattern: {
+									value: /^[а-яієїґ'][^ъыэёЪЫЭЁ]+$/i,
+									message: 'Можна використовувати тільки українські літери',
+								},
+							})}
+							helperText={errors?.firstName?.message}
+							error={!!errors?.firstName?.message}
 						/>
 						<TextField
 							margin='normal'
 							required
 							fullWidth
 							label='Прізвище'
-							name='lastName'
 							autoComplete='none'
-							autoFocus
+							{...register('lastName', {
+								required: "Поле є обов'язковим",
+								minLength: {
+									value: 2,
+									message: 'Прізвище не може бути коротше 2 символів',
+								},
+								pattern: {
+									value: /^[а-яієїґ'][^ъыэёЪЫЭЁ]+$/i,
+									message: 'Можна використовувати тільки українські літери',
+								},
+							})}
+							helperText={errors?.lastName?.message}
+							error={!!errors?.lastName?.message}
 						/>
 						<TextField
 							margin='normal'
 							required
 							fullWidth
 							label='Email'
-							name='email'
 							autoComplete='email'
-							autoFocus
+							{...register('email', {
+								required: "Поле є обов'язковим",
+								pattern: {
+									value:
+										/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+									message: 'Введіть коректну email-адресу',
+								},
+							})}
+							helperText={errors?.email?.message}
+							error={!!errors?.email?.message}
 						/>
 						<FormControl
 							fullWidth
 							margin='normal'
 							variant='outlined'
 							sx={{mb: 2}}
+							error={!!errors?.password?.message}
 						>
 							<InputLabel htmlFor='outlined-adornment-password'>
 								Пароль
@@ -109,9 +147,16 @@ const Register = () => {
 							<OutlinedInput
 								required
 								fullWidth
-								name='password'
 								label='Пароль'
 								type={showPassword ? 'text' : 'password'}
+								{...register('password', {
+									required: "Поле є обов'язковим",
+									minLength: {
+										value: 8,
+										message: 'Пароль не може бути коротше 8 символів',
+									},
+								})}
+								helperText={errors?.password?.message}
 								endAdornment={
 									<InputAdornment position='end'>
 										<IconButton
@@ -124,12 +169,18 @@ const Register = () => {
 									</InputAdornment>
 								}
 							/>
+							{!!errors?.password?.message && (
+								<FormHelperText id='component-helper-text'>
+									{errors.password.message}
+								</FormHelperText>
+							)}
 						</FormControl>
 						<input
 							style={{display: 'none'}}
 							type='file'
 							id='avatar'
 							name='avatar'
+							{...register('avatar')}
 						/>
 						<label
 							htmlFor='avatar'
@@ -154,10 +205,13 @@ const Register = () => {
 						>
 							Зареєструватись
 						</Button>
-						<Grid container>
+						<Grid container sx={{mt: 2}}>
 							<Grid item>
+								<Typography component='span' variant='body2'>
+									Вже маєте акаунт?{' '}
+								</Typography>
 								<Link href='#' variant='body2'>
-									{'Вже маєте акаунт? Увійти'}
+									{'Увійти'}
 								</Link>
 							</Grid>
 						</Grid>

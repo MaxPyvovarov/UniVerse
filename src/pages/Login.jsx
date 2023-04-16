@@ -14,9 +14,19 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import {FormHelperText} from '@mui/material';
+import {useForm} from 'react-hook-form';
 
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
+	const {
+		register,
+		formState: {errors},
+		handleSubmit,
+		reset,
+	} = useForm({
+		mode: 'onBlur',
+	});
 
 	const handleClickShowPassword = () => setShowPassword(show => !show);
 
@@ -24,7 +34,7 @@ const Login = () => {
 		event.preventDefault();
 	};
 
-	const handleSubmit = event => {
+	const onSubmit = event => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 		console.log({
@@ -69,21 +79,29 @@ const Login = () => {
 					<Typography component='h1' variant='h5'>
 						Вхід
 					</Typography>
-					<Box component='form' onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+					<Box component='form' onSubmit={handleSubmit(onSubmit)} sx={{mt: 1}}>
 						<TextField
 							margin='normal'
-							required
 							fullWidth
 							label='Email'
-							name='email'
 							autoComplete='email'
-							autoFocus
+							{...register('email', {
+								required: "Поле є обов'язковим",
+								pattern: {
+									value:
+										/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+									message: 'Введіть коректну email-адресу',
+								},
+							})}
+							helperText={errors?.email?.message}
+							error={!!errors?.email?.message}
 						/>
 						<FormControl
 							fullWidth
 							margin='normal'
 							variant='outlined'
 							sx={{mb: 2}}
+							error={!!errors?.password?.message}
 						>
 							<InputLabel htmlFor='outlined-adornment-password'>
 								Пароль
@@ -91,9 +109,16 @@ const Login = () => {
 							<OutlinedInput
 								required
 								fullWidth
-								name='password'
 								label='Пароль'
 								type={showPassword ? 'text' : 'password'}
+								{...register('password', {
+									required: "Поле є обов'язковим",
+									minLength: {
+										value: 8,
+										message: 'Пароль не може бути коротше 8 символів',
+									},
+								})}
+								helperText={errors?.password?.message}
 								endAdornment={
 									<InputAdornment position='end'>
 										<IconButton
@@ -106,6 +131,11 @@ const Login = () => {
 									</InputAdornment>
 								}
 							/>
+							{!!errors?.password?.message && (
+								<FormHelperText id='component-helper-text'>
+									{errors.password.message}
+								</FormHelperText>
+							)}
 						</FormControl>
 						<Button
 							type='submit'
