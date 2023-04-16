@@ -19,6 +19,8 @@ import {useForm} from 'react-hook-form';
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
+	const [hasPreview, setHasPreview] = useState(false);
+
 	const {
 		register,
 		formState: {errors},
@@ -35,15 +37,27 @@ const Register = () => {
 	};
 
 	const onSubmit = data => {
-		console.log(JSON.stringify(data));
+		data = {...data, avatar: document.querySelector('#avatar').files[0]};
+		console.log(data);
 		reset();
+		setHasPreview(false);
+	};
+
+	const previewAvatar = () => {
+		const reader = new FileReader();
+		reader.readAsDataURL(document.querySelector('#avatar').files[0]);
+		setHasPreview(true);
+
+		reader.onloadend = function (event) {
+			document.querySelector('#avatar-preview').src = event.target.result;
+		};
 	};
 
 	return (
 		<Box
 			component='main'
 			sx={{
-				height: '100vh',
+				minHeight: '100vh',
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
@@ -156,7 +170,6 @@ const Register = () => {
 										message: 'Пароль не може бути коротше 8 символів',
 									},
 								})}
-								helperText={errors?.password?.message}
 								endAdornment={
 									<InputAdornment position='end'>
 										<IconButton
@@ -181,6 +194,8 @@ const Register = () => {
 							id='avatar'
 							name='avatar'
 							{...register('avatar')}
+							accept='image/*'
+							onChange={previewAvatar}
 						/>
 						<label
 							htmlFor='avatar'
@@ -192,11 +207,21 @@ const Register = () => {
 								width: 'fit-content',
 							}}
 						>
-							<img src='/add.png' alt='add' style={{maxWidth: '48px'}} />
+							{hasPreview ? (
+								<img
+									style={{maxWidth: '120px', marginTop: 20}}
+									id='avatar-preview'
+								/>
+							) : (
+								<img src='/add.png' alt='add' style={{maxWidth: '48px'}} />
+							)}
 							<Typography component='span' variant='body1'>
-								Додати зображення аватару
+								{hasPreview
+									? 'Змінити аватар'
+									: "Додати аватар (не обов'язково)"}
 							</Typography>
 						</label>
+
 						<Button
 							type='submit'
 							fullWidth

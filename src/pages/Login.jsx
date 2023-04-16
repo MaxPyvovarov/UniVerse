@@ -34,16 +34,9 @@ const Login = () => {
 		event.preventDefault();
 	};
 
-	const onSubmit = event => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-		console.log({
-			firstName: data.get('firstName'),
-			lastName: data.get('lastName'),
-			email: data.get('email'),
-			password: data.get('password'),
-			avatar: data.get('avatar'),
-		});
+	const onSubmit = data => {
+		console.log(data);
+		reset();
 	};
 
 	return (
@@ -118,7 +111,6 @@ const Login = () => {
 										message: 'Пароль не може бути коротше 8 символів',
 									},
 								})}
-								helperText={errors?.password?.message}
 								endAdornment={
 									<InputAdornment position='end'>
 										<IconButton
