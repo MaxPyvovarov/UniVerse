@@ -1,5 +1,12 @@
+import Register from './pages/Register';
+import Login from './pages/Login';
+
 function App() {
-	return <div>Hello world!</div>;
+	return (
+		<div>
+			<Login />
+		</div>
+	);
 }
 
 export default App;
