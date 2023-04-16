@@ -21,7 +21,7 @@ const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const {
 		register,
-		formState: {errors},
+		formState: {errors, isValid},
 		handleSubmit,
 		reset,
 	} = useForm({
@@ -134,6 +134,7 @@ const Login = () => {
 							fullWidth
 							variant='contained'
 							sx={{mt: 3, mb: 2}}
+							disabled={!isValid}
 						>
 							Увійти
 						</Button>

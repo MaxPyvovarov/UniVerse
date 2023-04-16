@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import CancelIcon from '@mui/icons-material/Cancel';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import FormControl from '@mui/material/FormControl';
@@ -23,7 +24,7 @@ const Register = () => {
 
 	const {
 		register,
-		formState: {errors},
+		formState: {errors, isValid},
 		handleSubmit,
 		reset,
 	} = useForm({
@@ -37,20 +38,29 @@ const Register = () => {
 	};
 
 	const onSubmit = data => {
-		data = {...data, avatar: document.querySelector('#avatar').files[0]};
+		data = {
+			...data,
+			avatar: document.querySelector('#avatar').files[0] || null,
+		};
 		console.log(data);
 		reset();
 		setHasPreview(false);
 	};
 
-	const previewAvatar = () => {
-		const reader = new FileReader();
-		reader.readAsDataURL(document.querySelector('#avatar').files[0]);
-		setHasPreview(true);
+	const previewAvatar = event => {
+		const file = event.target.files[0];
+		if ((file && file?.type === 'image/jpeg') || file?.type === 'image/png') {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			setHasPreview(true);
 
-		reader.onloadend = function (event) {
-			document.querySelector('#avatar-preview').src = event.target.result;
-		};
+			reader.onloadend = function (event) {
+				document.querySelector('#avatar-preview').src = event.target.result;
+			};
+		} else {
+			event.target.value = null;
+			setHasPreview(false);
+		}
 	};
 
 	return (
@@ -188,54 +198,75 @@ const Register = () => {
 								</FormHelperText>
 							)}
 						</FormControl>
-						<input
-							style={{display: 'none'}}
-							type='file'
-							id='avatar'
-							name='avatar'
-							{...register('avatar')}
-							accept='image/*'
-							onChange={previewAvatar}
-						/>
-						<label
-							htmlFor='avatar'
-							style={{
+						<Box
+							sx={{
 								display: 'flex',
 								alignItems: 'center',
-								gap: '15px',
-								cursor: 'pointer',
-								width: 'fit-content',
+								gap: '10px',
 							}}
 						>
-							{hasPreview ? (
-								<img
-									style={{maxWidth: '120px', marginTop: 20}}
-									id='avatar-preview'
+							<input
+								style={{display: 'none'}}
+								type='file'
+								id='avatar'
+								name='avatar'
+								{...register('avatar')}
+								accept='image/png, image/jpeg'
+								onChange={event => previewAvatar(event)}
+							/>
+							<label
+								htmlFor='avatar'
+								style={{
+									display: 'flex',
+									alignItems: 'center',
+									gap: '20px',
+									cursor: 'pointer',
+									width: 'fit-content',
+								}}
+							>
+								{hasPreview ? (
+									<img
+										style={{maxWidth: '120px', marginTop: 20}}
+										id='avatar-preview'
+									/>
+								) : (
+									<img src='/add.png' alt='add' style={{maxWidth: '48px'}} />
+								)}
+								<Typography component='span' variant='body1'>
+									{hasPreview
+										? 'Змінити аватар'
+										: "Додати аватар (не обов'язково)"}
+								</Typography>
+							</label>
+							{hasPreview && (
+								<CancelIcon
+									onClick={() => {
+										setHasPreview(false);
+										document.querySelector('#avatar').value = null;
+									}}
+									sx={{
+										cursor: 'pointer',
+										fontSize: '24px',
+										color: 'primary.main',
+									}}
 								/>
-							) : (
-								<img src='/add.png' alt='add' style={{maxWidth: '48px'}} />
 							)}
-							<Typography component='span' variant='body1'>
-								{hasPreview
-									? 'Змінити аватар'
-									: "Додати аватар (не обов'язково)"}
-							</Typography>
-						</label>
-
+						</Box>
 						<Button
 							type='submit'
 							fullWidth
 							variant='contained'
 							sx={{mt: 3, mb: 2}}
+							disabled={!isValid}
 						>
 							Зареєструватись
 						</Button>
-						<Grid container sx={{mt: 2}}>
+						<Grid container sx={{mt: 2, justifyContent: 'flex-end'}}>
 							<Grid item>
-								<Typography component='span' variant='body2'>
+								<Typography component='span' variant='body1'>
 									Вже маєте акаунт?{' '}
 								</Typography>
-								<Link href='#' variant='body2'>
+								<Link href='#' variant='body1'>
 									{'Увійти'}
 								</Link>
 							</Grid>
