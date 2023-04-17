@@ -7,7 +7,7 @@ import useAuth from './hooks/useAuth';
 
 function App() {
 	const {user} = useAuth();
-	console.log(user);
+	console.log(localStorage.getItem('user'));
 
 	return (
 		<BrowserRouter>

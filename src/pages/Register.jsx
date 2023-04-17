@@ -63,6 +63,7 @@ const Register = () => {
 				const user = userCredential.user;
 				console.log(user);
 				login(user);
+				localStorage.setItem('user', JSON.stringify(user));
 			})
 			.catch(error => {
 				setError(error.message);
@@ -201,7 +202,7 @@ const Register = () => {
 								{...register('password', {
 									required: "Поле є обов'язковим",
 									minLength: {
-										value: 7,
+										value: 8,
 										message: 'Пароль не може бути коротше 8 символів',
 									},
 								})}

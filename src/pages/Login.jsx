@@ -47,6 +47,7 @@ const Login = () => {
 				const user = userCredential.user;
 				console.log(user);
 				login(user);
+				localStorage.setItem('user', JSON.stringify(user));
 			})
 			.catch(error => {
 				setError(error.message);
