@@ -13,12 +13,19 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import {Alert} from '@mui/material';
 import {FormHelperText} from '@mui/material';
 import {useForm} from 'react-hook-form';
 import {Link} from 'react-router-dom';
+import {auth} from '../firebase';
+import useAuth from '../hooks/useAuth';
+import {signInWithEmailAndPassword} from 'firebase/auth';
 
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
+	const [error, setError] = useState(null);
+	const {login} = useAuth();
+
 	const {
 		register,
 		formState: {errors, isValid},
@@ -35,7 +42,16 @@ const Login = () => {
 	};
 
 	const onSubmit = data => {
-		console.log(data);
+		signInWithEmailAndPassword(auth, data.email, data.password)
+			.then(userCredential => {
+				const user = userCredential.user;
+				console.log(user);
+				login(user);
+			})
+			.catch(error => {
+				setError(error.message);
+			});
+
 		reset();
 	};
 
@@ -129,6 +145,7 @@ const Login = () => {
 								</FormHelperText>
 							)}
 						</FormControl>
+						{error && <Alert severity='error'>{error}</Alert>}
 						<Button
 							type='submit'
 							fullWidth

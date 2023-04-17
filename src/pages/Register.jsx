@@ -14,14 +14,21 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import {Alert} from '@mui/material';
 import {FormHelperText} from '@mui/material';
 import {useForm} from 'react-hook-form';
 import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
+import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {auth} from '../firebase';
+import useAuth from '../hooks/useAuth';
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [hasPreview, setHasPreview] = useState(false);
+	const [error, setError] = useState(null);
+
+	const {login} = useAuth();
 
 	const {
 		register,
@@ -50,6 +57,17 @@ const Register = () => {
 			avatar: document.querySelector('#avatar').files[0] || null,
 		};
 		console.log(data);
+
+		createUserWithEmailAndPassword(auth, data.email, data.password)
+			.then(userCredential => {
+				const user = userCredential.user;
+				console.log(user);
+				login(user);
+			})
+			.catch(error => {
+				setError(error.message);
+			});
+
 		reset();
 		setHasPreview(false);
 	};
@@ -183,7 +201,7 @@ const Register = () => {
 								{...register('password', {
 									required: "Поле є обов'язковим",
 									minLength: {
-										value: 8,
+										value: 7,
 										message: 'Пароль не може бути коротше 8 символів',
 									},
 								})}
@@ -259,6 +277,11 @@ const Register = () => {
 								/>
 							)}
 						</Box>
+						{error && (
+							<Alert severity='error' sx={{marginTop: 2}}>
+								{error}
+							</Alert>
+						)}
 						<Button
 							type='submit'
 							fullWidth

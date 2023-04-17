@@ -7,6 +7,7 @@ import useAuth from './hooks/useAuth';
 
 function App() {
 	const {user} = useAuth();
+	console.log(user);
 
 	return (
 		<BrowserRouter>
