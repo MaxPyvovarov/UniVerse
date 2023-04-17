@@ -7,7 +7,6 @@ import useAuth from './hooks/useAuth';
 
 function App() {
 	const {user} = useAuth();
-	console.log(user);
 
 	return (
 		<BrowserRouter>
@@ -15,11 +14,13 @@ function App() {
 				{user ? (
 					<Route path='/' element={<Layout />}>
 						<Route index element={<Home />} />
+						<Route path='*' element={<Home />} />
 					</Route>
 				) : (
 					<>
 						<Route path='/' element={<Register />} />
 						<Route path='/login' element={<Login />} />
+						<Route path='/*' element={<Register />} />
 					</>
 				)}
 			</Routes>

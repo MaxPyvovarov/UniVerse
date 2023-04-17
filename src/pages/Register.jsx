@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,6 +17,7 @@ import InputLabel from '@mui/material/InputLabel';
 import {FormHelperText} from '@mui/material';
 import {useForm} from 'react-hook-form';
 import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -30,6 +31,12 @@ const Register = () => {
 	} = useForm({
 		mode: 'onBlur',
 	});
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		navigate('/');
+	}, []);
 
 	const handleClickShowPassword = () => setShowPassword(show => !show);
 
