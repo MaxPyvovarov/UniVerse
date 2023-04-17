@@ -3,7 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -16,6 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import {FormHelperText} from '@mui/material';
 import {useForm} from 'react-hook-form';
+import {Link} from 'react-router-dom';
 
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -145,9 +145,7 @@ const Login = () => {
 								</Link>
 							</Grid>
 							<Grid item>
-								<Link href='#' variant='body2'>
-									{'Реєстрація'}
-								</Link>
+								<Link to='/'>{'Реєстрація'}</Link>
 							</Grid>
 						</Grid>
 					</Box>

@@ -3,7 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -17,6 +16,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import {FormHelperText} from '@mui/material';
 import {useForm} from 'react-hook-form';
+import {Link} from 'react-router-dom';
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -266,9 +266,7 @@ const Register = () => {
 								<Typography component='span' variant='body1'>
 									Вже маєте акаунт?{' '}
 								</Typography>
-								<Link href='#' variant='body1'>
-									{'Увійти'}
-								</Link>
+								<Link to='/login'>{'Увійти'}</Link>
 							</Grid>
 						</Grid>
 					</Box>
