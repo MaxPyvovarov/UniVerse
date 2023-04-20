@@ -17,8 +17,7 @@ import InputLabel from '@mui/material/InputLabel';
 import {Alert} from '@mui/material';
 import {FormHelperText} from '@mui/material';
 import {useForm} from 'react-hook-form';
-import {Link} from 'react-router-dom';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate, Navigate} from 'react-router-dom';
 import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';
 import {auth, db, storage} from '../firebase';
@@ -29,6 +28,7 @@ const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [hasPreview, setHasPreview] = useState(false);
 	const [error, setError] = useState('');
+	const navigate = useNavigate();
 
 	const {login} = useAuth();
 
@@ -40,8 +40,6 @@ const Register = () => {
 	} = useForm({
 		mode: 'onBlur',
 	});
-
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		navigate('/');
@@ -66,8 +64,6 @@ const Register = () => {
 				data.password
 			);
 			const user = res.user;
-			login(user);
-			localStorage.setItem('user', JSON.stringify(user));
 			const displayName = `${data.firstName} ${data.lastName}`;
 
 			const storageRef = ref(storage, `avatars/${user.uid}`);
@@ -84,6 +80,8 @@ const Register = () => {
 					);
 				});
 			}
+
+			navigate('/login', {state: true});
 
 			// await setDoc(doc(db, 'users', user.uid), {
 			// 	displayName,

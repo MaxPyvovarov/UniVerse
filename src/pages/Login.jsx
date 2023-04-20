@@ -16,7 +16,7 @@ import InputLabel from '@mui/material/InputLabel';
 import {Alert} from '@mui/material';
 import {FormHelperText} from '@mui/material';
 import {useForm} from 'react-hook-form';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {auth} from '../firebase';
 import useAuth from '../hooks/useAuth';
 import {signInWithEmailAndPassword} from 'firebase/auth';
@@ -25,6 +25,7 @@ const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState(null);
 	const {login} = useAuth();
+	const location = useLocation();
 
 	const {
 		register,
@@ -90,6 +91,11 @@ const Login = () => {
 						Вхід
 					</Typography>
 					<Box component='form' onSubmit={handleSubmit(onSubmit)} sx={{mt: 1}}>
+						{location.state && (
+							<Alert severity='success'>
+								Реєстрація успішна! Тепер Ви можете увійти у свій акаунт
+							</Alert>
+						)}
 						<TextField
 							margin='normal'
 							fullWidth
