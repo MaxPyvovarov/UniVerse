@@ -19,14 +19,14 @@ import {FormHelperText} from '@mui/material';
 import {useForm} from 'react-hook-form';
 import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
-import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import {auth} from '../firebase';
 import useAuth from '../hooks/useAuth';
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [hasPreview, setHasPreview] = useState(false);
-	const [error, setError] = useState(null);
+	const [error, setError] = useState('');
 
 	const {login} = useAuth();
 
@@ -61,7 +61,6 @@ const Register = () => {
 		createUserWithEmailAndPassword(auth, data.email, data.password)
 			.then(userCredential => {
 				const user = userCredential.user;
-				console.log(user);
 				login(user);
 				localStorage.setItem('user', JSON.stringify(user));
 			})
@@ -131,7 +130,7 @@ const Register = () => {
 						<TextField
 							margin='normal'
 							fullWidth
-							label="Ім'я"
+							label="Ім'я *"
 							autoComplete='none'
 							{...register('firstName', {
 								required: "Поле є обов'язковим",
