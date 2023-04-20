@@ -20,8 +20,10 @@ import {useForm} from 'react-hook-form';
 import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
-import {auth} from '../firebase';
+import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';
+import {auth, db, storage} from '../firebase';
 import useAuth from '../hooks/useAuth';
+// import {doc, setDoc} from 'firebase/firestore';
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -51,22 +53,44 @@ const Register = () => {
 		event.preventDefault();
 	};
 
-	const onSubmit = data => {
+	const onSubmit = async data => {
 		data = {
 			...data,
 			avatar: document.querySelector('#avatar').files[0] || null,
 		};
-		console.log(data);
 
-		createUserWithEmailAndPassword(auth, data.email, data.password)
-			.then(userCredential => {
-				const user = userCredential.user;
-				login(user);
-				localStorage.setItem('user', JSON.stringify(user));
-			})
-			.catch(error => {
-				setError(error.message);
-			});
+		try {
+			const res = await createUserWithEmailAndPassword(
+				auth,
+				data.email,
+				data.password
+			);
+			const user = res.user;
+			login(user);
+			localStorage.setItem('user', JSON.stringify(user));
+			const displayName = `${data.firstName} ${data.lastName}`;
+
+			const storageRef = ref(storage, `avatars/${user.uid}`);
+
+			if (data.avatar) {
+				uploadBytes(storageRef, data.avatar).then(async snapshot => {
+					await getDownloadURL(ref(storage, snapshot.metadata.fullPath)).then(
+						url => {
+							updateProfile(user, {
+								displayName,
+								photoURL: url,
+							});
+						}
+					);
+				});
+			}
+
+			// await setDoc(doc(db, 'users', user.uid), {
+			// 	displayName,
+			// });
+		} catch (error) {
+			setError(error.message);
+		}
 
 		reset();
 		setHasPreview(false);
