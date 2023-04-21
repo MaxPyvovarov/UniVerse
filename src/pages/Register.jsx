@@ -17,20 +17,17 @@ import InputLabel from '@mui/material/InputLabel';
 import {Alert} from '@mui/material';
 import {FormHelperText} from '@mui/material';
 import {useForm} from 'react-hook-form';
-import {Link, useNavigate, Navigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';
+import {doc, setDoc} from 'firebase/firestore';
 import {auth, db, storage} from '../firebase';
-import useAuth from '../hooks/useAuth';
-// import {doc, setDoc} from 'firebase/firestore';
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [hasPreview, setHasPreview] = useState(false);
 	const [error, setError] = useState('');
 	const navigate = useNavigate();
-
-	const {login} = useAuth();
 
 	const {
 		register,
@@ -71,9 +68,16 @@ const Register = () => {
 			if (data.avatar) {
 				uploadBytes(storageRef, data.avatar).then(async snapshot => {
 					await getDownloadURL(ref(storage, snapshot.metadata.fullPath)).then(
-						url => {
-							updateProfile(user, {
+						async url => {
+							await updateProfile(user, {
 								displayName,
+								photoURL: url,
+							});
+
+							await setDoc(doc(db, 'users', user.uid), {
+								displayName,
+								uid: user.uid,
+								email: data.email,
 								photoURL: url,
 							});
 						}
@@ -82,10 +86,6 @@ const Register = () => {
 			}
 
 			navigate('/login', {state: true});
-
-			// await setDoc(doc(db, 'users', user.uid), {
-			// 	displayName,
-			// });
 		} catch (error) {
 			setError(error.message);
 		}

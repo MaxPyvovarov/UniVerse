@@ -48,7 +48,6 @@ const Login = () => {
 				const user = userCredential.user;
 				login(user);
 				localStorage.setItem('user', JSON.stringify(user));
-				console.log(user);
 			})
 			.catch(error => {
 				setError(error.message);
@@ -93,7 +92,7 @@ const Login = () => {
 					<Box component='form' onSubmit={handleSubmit(onSubmit)} sx={{mt: 1}}>
 						{location.state && (
 							<Alert severity='success'>
-								Реєстрація успішна! Тепер Ви можете увійти у свій акаунт
+								Реєстрація успішна! Ви можете увійти у свій акаунт
 							</Alert>
 						)}
 						<TextField
