@@ -1,19 +1,29 @@
+import {CssBaseline} from '@mui/material';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Layout from './components/Layout/Layout';
-import Home from './components/Home';
+import Home from './pages/Home';
 import useAuth from './hooks/useAuth';
+import Documents from './pages/Documents';
+import Chat from './pages/Chat';
+import Groups from './pages/Groups';
+import Profile from './pages/Profile';
 
 function App() {
 	const {user} = useAuth();
 
 	return (
 		<BrowserRouter>
+			<CssBaseline />
 			<Routes>
 				{user ? (
 					<Route path='/' element={<Layout />}>
 						<Route index element={<Home />} />
+						<Route path='/chat' element={<Chat />} />
+						<Route path='/groups' element={<Groups />} />
+						<Route path='/documents' element={<Documents />} />
+						<Route path='/profile' element={<Profile />} />
 						<Route path='*' element={<Home />} />
 					</Route>
 				) : (

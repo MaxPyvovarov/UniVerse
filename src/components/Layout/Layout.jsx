@@ -1,14 +1,12 @@
 import React from 'react';
-import {Link, Outlet} from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
+import Header from './Header/Header';
 
 const Layout = () => {
 	return (
 		<>
-			<header>
-				<Link to='/'>Home</Link>
-			</header>
+			<Header />
 			<Outlet />
-			<footer>2023</footer>
 		</>
 	);
 };
