@@ -151,7 +151,7 @@ const Register = () => {
 							margin='normal'
 							fullWidth
 							label="Ім'я *"
-							autoComplete='none'
+							autoComplete='off'
 							{...register('firstName', {
 								required: "Поле є обов'язковим",
 								minLength: {
@@ -171,7 +171,7 @@ const Register = () => {
 							required
 							fullWidth
 							label='Прізвище'
-							autoComplete='none'
+							autoComplete='off'
 							{...register('lastName', {
 								required: "Поле є обов'язковим",
 								minLength: {

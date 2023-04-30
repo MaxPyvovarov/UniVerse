@@ -136,7 +136,7 @@ const Header = () => {
 							color: 'inherit',
 							textDecoration: 'none',
 							textAlign: 'center',
-							paddingX: 3,
+							paddingX: {xs: 1, md: 3},
 							paddingY: 1,
 						}}
 					>

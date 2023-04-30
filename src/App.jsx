@@ -3,7 +3,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Layout from './components/Layout/Layout';
-import Home from './pages/Home';
+import Home from './pages/Home/Home';
 import useAuth from './hooks/useAuth';
 import Documents from './pages/Documents';
 import Chat from './pages/Chat';
