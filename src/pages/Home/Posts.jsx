@@ -37,13 +37,18 @@ const Posts = () => {
 				gap: '20px',
 			}}
 		>
-			{isLoading && <CircularProgress />}
+			{isLoading && (
+				<CircularProgress
+					style={{width: 72, height: 72, alignSelf: 'center'}}
+				/>
+			)}
 			{!isLoading && posts.length === 0 && (
 				<Box
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
+						opacity: 0.6,
 					}}
 				>
 					<MarkAsUnread sx={{width: 100, height: 100}} />

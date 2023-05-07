@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import TextField from '@mui/material/TextField';
 import {Box} from '@mui/system';
-import {Alert} from '@mui/material';
 
 import useAuth from '../../hooks/useAuth';
 import {addDoc, collection} from 'firebase/firestore';
@@ -12,6 +11,7 @@ const AddPost = () => {
 	const [content, setContent] = useState('');
 	const {user} = useAuth();
 	const [error, setError] = useState('');
+	const [isAllowedToSend, setIsAllowedToSend] = useState(true);
 
 	const addPostHandler = async e => {
 		const timeStamp = new Date();
@@ -26,7 +26,19 @@ const AddPost = () => {
 			':' +
 			`${minutes}`;
 
-		if (e.key === 'Enter' && user && e.target.value.trim() !== '') {
+		if (
+			e.key === 'Enter' &&
+			user &&
+			e.target.value.trim() !== '' &&
+			isAllowedToSend
+		) {
+			setIsAllowedToSend(false);
+
+			setTimeout(() => {
+				setIsAllowedToSend(true);
+			}, 30000);
+
+			setContent('');
 			try {
 				await addDoc(collection(db, 'posts'), {
 					author: {
@@ -41,18 +53,11 @@ const AddPost = () => {
 			} catch (e) {
 				setError(e);
 			}
-
-			setContent('');
 		}
 	};
 
 	return (
 		<>
-			{error && (
-				<Alert severity='error' sx={{marginBottom: 10}}>
-					{error}
-				</Alert>
-			)}
 			<Box
 				sx={{
 					borderRadius: '10px',
@@ -74,6 +79,8 @@ const AddPost = () => {
 					onKeyDown={addPostHandler}
 					onChange={e => setContent(e.target.value)}
 					value={content}
+					helperText={'Пост можна робити раз на 30 с'}
+					error={!!error}
 				/>
 			</Box>
 		</>
