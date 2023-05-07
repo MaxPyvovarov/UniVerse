@@ -15,6 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import {Alert} from '@mui/material';
 import {FormHelperText} from '@mui/material';
+
 import {useForm} from 'react-hook-form';
 import {Link, useNavigate} from 'react-router-dom';
 import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';

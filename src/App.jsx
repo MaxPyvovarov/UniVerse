@@ -5,7 +5,7 @@ import Login from './pages/Login';
 import Layout from './components/Layout/Layout';
 import Home from './pages/Home/Home';
 import useAuth from './hooks/useAuth';
-import Documents from './pages/Documents';
+import Documents from './pages/Documents/Documents';
 import Chat from './pages/Chat';
 import Groups from './pages/Groups';
 import Profile from './pages/Profile';
