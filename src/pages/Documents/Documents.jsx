@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Box, Typography, Button, Alert} from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import {MarkAsUnread} from '@mui/icons-material';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 
 import {onSnapshot, collection, orderBy, query} from 'firebase/firestore';
@@ -15,10 +14,10 @@ import DocumentsListItem from './DocumentsListItem';
 
 const docTypes = [
 	'application/pdf',
-	'application/doc',
-	'application/docx',
-	'application/ppt',
-	'application/pptx',
+	'application/msword',
+	'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+	'application/vnd.ms-powerpoint',
+	'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 ];
 
 const Documents = () => {
