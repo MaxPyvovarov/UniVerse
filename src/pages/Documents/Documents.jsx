@@ -87,6 +87,7 @@ const Documents = () => {
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
+				padding: '15px 10px',
 			}}
 		>
 			{error && (

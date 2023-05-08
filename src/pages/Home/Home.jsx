@@ -13,7 +13,11 @@ const Home = () => {
 	}, []);
 
 	return (
-		<Box sx={{padding: 2}}>
+		<Box
+			sx={{
+				padding: '15px 10px',
+			}}
+		>
 			<Typography component='h1' variant='h3' marginBottom={4}>
 				Стрічка новин
 			</Typography>

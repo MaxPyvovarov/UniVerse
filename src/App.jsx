@@ -6,7 +6,7 @@ import Layout from './components/Layout/Layout';
 import Home from './pages/Home/Home';
 import useAuth from './hooks/useAuth';
 import Documents from './pages/Documents/Documents';
-import Chat from './pages/Chat';
+import ChatPage from './pages/Chat/ChatPage';
 import Groups from './pages/Groups';
 import Profile from './pages/Profile';
 
@@ -20,7 +20,7 @@ function App() {
 				{user ? (
 					<Route path='/' element={<Layout />}>
 						<Route index element={<Home />} />
-						<Route path='/chat' element={<Chat />} />
+						<Route path='/chat' element={<ChatPage />} />
 						<Route path='/groups' element={<Groups />} />
 						<Route path='/documents' element={<Documents />} />
 						<Route path='/profile' element={<Profile />} />

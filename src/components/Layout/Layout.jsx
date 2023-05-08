@@ -23,7 +23,6 @@ const Layout = () => {
 						borderRadius: '15px',
 						background: '#fff',
 						boxShadow: '0px 0px 20px 5px rgba(0, 0, 0, .3)',
-						padding: '15px 10px',
 					}}
 				>
 					<Outlet />
