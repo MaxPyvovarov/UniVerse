@@ -1,7 +1,7 @@
 import {Avatar, Box, Typography} from '@mui/material';
 import React from 'react';
 
-const Chats = () => {
+const ChatList = () => {
 	return (
 		<Box sx={{display: 'flex', flexDirection: 'column'}}>
 			<Box
@@ -12,6 +12,11 @@ const Chats = () => {
 					backgroundColor: '#eee',
 					padding: '16px 8px',
 					borderBottom: '1px solid #ccc',
+					transition: 'background-color .2s ease-in-out',
+					cursor: 'pointer',
+					'&:hover': {
+						backgroundColor: '#ccc',
+					},
 				}}
 			>
 				<Avatar
@@ -35,6 +40,11 @@ const Chats = () => {
 					backgroundColor: '#eee',
 					padding: '16px 8px',
 					borderBottom: '1px solid #ccc',
+					transition: 'background-color .2s ease-in-out',
+					cursor: 'pointer',
+					'&:hover': {
+						backgroundColor: '#ccc',
+					},
 				}}
 			>
 				<Avatar
@@ -58,6 +68,11 @@ const Chats = () => {
 					backgroundColor: '#eee',
 					padding: '16px 8px',
 					borderBottom: '1px solid #ccc',
+					transition: 'background-color .2s ease-in-out',
+					cursor: 'pointer',
+					'&:hover': {
+						backgroundColor: '#ccc',
+					},
 				}}
 			>
 				<Avatar
@@ -77,4 +92,4 @@ const Chats = () => {
 	);
 };
 
-export default Chats;
+export default ChatList;

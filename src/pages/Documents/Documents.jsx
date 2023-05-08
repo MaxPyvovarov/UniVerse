@@ -88,6 +88,7 @@ const Documents = () => {
 				display: 'flex',
 				flexDirection: 'column',
 				padding: '15px 10px',
+				height: '100%',
 			}}
 		>
 			{error && (
@@ -156,7 +157,14 @@ const Documents = () => {
 					</Typography>
 				</Box>
 			)}
-			<Box sx={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					gap: '20px',
+					overflowY: 'scroll',
+				}}
+			>
 				{documents.length > 0 &&
 					documents.map(doc => <DocumentsListItem key={doc._id} doc={doc} />)}
 			</Box>

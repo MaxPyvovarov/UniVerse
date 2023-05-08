@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import TextField from '@mui/material/TextField';
-import {Box} from '@mui/system';
+import {TextField, Box} from '@mui/material';
 
 import useAuth from '../../hooks/useAuth';
 import {addDoc, collection} from 'firebase/firestore';
@@ -14,24 +13,24 @@ const AddPost = () => {
 	const [isAllowedToSend, setIsAllowedToSend] = useState(true);
 
 	const addPostHandler = async e => {
-		const timeStamp = new Date();
-		let minutes = 0;
-
-		if (timeStamp.getMinutes() > 9) minutes = timeStamp.getMinutes();
-		else minutes = '0' + timeStamp.getMinutes();
-
-		let date =
-			moment().format('DD.MM.YY ') +
-			`${timeStamp.getHours()}` +
-			':' +
-			`${minutes}`;
-
 		if (
 			e.key === 'Enter' &&
 			user &&
 			e.target.value.trim() !== '' &&
 			isAllowedToSend
 		) {
+			const timeStamp = new Date();
+			let minutes = 0;
+
+			if (timeStamp.getMinutes() > 9) minutes = timeStamp.getMinutes();
+			else minutes = '0' + timeStamp.getMinutes();
+
+			let date =
+				moment().format('DD.MM.YY ') +
+				`${timeStamp.getHours()}` +
+				':' +
+				`${minutes}`;
+
 			setIsAllowedToSend(false);
 
 			setTimeout(() => {
@@ -72,7 +71,6 @@ const AddPost = () => {
 						sx: {
 							borderRadius: '20px',
 							bgcolor: '#f9f9f9',
-							overflow: 'revert',
 						},
 					}}
 					sx={{width: '100%'}}
