@@ -80,6 +80,8 @@ const Register = () => {
 								email: data.email,
 								photoURL: url,
 							});
+
+							await setDoc(doc(db, 'userChats', user.uid), {});
 						}
 					);
 				});
