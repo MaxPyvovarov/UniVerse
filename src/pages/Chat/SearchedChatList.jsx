@@ -1,7 +1,7 @@
 import {Avatar, Box, Typography} from '@mui/material';
 import React from 'react';
 
-const ChatList = ({list, handleSelect}) => {
+const SearchedChatList = ({list, handleSelect}) => {
 	return (
 		<Box
 			sx={{
@@ -26,16 +26,13 @@ const ChatList = ({list, handleSelect}) => {
 							backgroundColor: '#ccc',
 						},
 					}}
-					key={contact[0]}
-					onClick={() => handleSelect(contact[1].userInfo)}
+					key={contact}
+					onClick={() => handleSelect(contact)}
 				>
-					<Avatar
-						src={contact[1].userInfo.photoURL}
-						sx={{width: 56, height: 56}}
-					/>
+					<Avatar src={contact.photoURL} sx={{width: 56, height: 56}} />
 					<div>
 						<Typography variant='h6' fontSize='1.1rem'>
-							{contact[1].userInfo.displayName}
+							{contact.displayName}
 						</Typography>
 						<Typography variant='p' fontSize='1rem'>
 							Привіт!
@@ -47,4 +44,4 @@ const ChatList = ({list, handleSelect}) => {
 	);
 };
 
-export default ChatList;
+export default SearchedChatList;

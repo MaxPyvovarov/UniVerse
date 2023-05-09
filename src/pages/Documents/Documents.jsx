@@ -76,9 +76,8 @@ const Documents = () => {
 			setIsLoading(false);
 		});
 
-		return () => {
-			unsub();
-		};
+		return () => unsub();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

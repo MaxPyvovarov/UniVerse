@@ -6,7 +6,7 @@ const Search = ({handleSearch}) => {
 	const [username, setUsername] = useState('');
 
 	const handleKey = e => {
-		if (e.key === 'Enter' && e.target.value.trim() !== '') {
+		if (e.key === 'Enter') {
 			handleSearch(username);
 		}
 	};
