@@ -1,8 +1,22 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Message from './Message';
 import {Box} from '@mui/material';
+import useChat from '../../hooks/useChat';
+import {doc, onSnapshot} from 'firebase/firestore';
+import {db} from '../../firebase';
 
 const Messages = () => {
+	const [messages, setMessages] = useState([]);
+	const {data} = useChat();
+
+	useEffect(() => {
+		const unsub = onSnapshot(doc(db, 'chats', data.chatId), doc => {
+			doc.exists() && setMessages(doc.data().messages);
+		});
+
+		return () => unsub();
+	}, [data.chatId]);
+
 	return (
 		<Box
 			sx={{
@@ -13,11 +27,9 @@ const Messages = () => {
 				flexGrow: 1,
 			}}
 		>
-			<Message isSent={false} />
-			<Message isSent={true} />
-			<Message isSent={false} />
-			<Message isSent={true} />
-			<Message isSent={false} />
+			{messages?.map(msg => (
+				<Message msg={msg} key={msg.id} />
+			))}
 		</Box>
 	);
 };

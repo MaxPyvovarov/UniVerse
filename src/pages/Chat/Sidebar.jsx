@@ -16,12 +16,15 @@ import {
 } from 'firebase/firestore';
 import {db} from '../../firebase';
 import useAuth from '../../hooks/useAuth';
+import useChat from '../../hooks/useChat';
 import SearchedChatList from './SearchedChatList';
 
 const Sidebar = () => {
 	const [list, setList] = useState([]);
 	const [searchedList, setSearchedList] = useState([]);
+
 	const {user} = useAuth();
+	const {dispatch} = useChat();
 
 	useEffect(() => {
 		const getList = () => {
@@ -57,6 +60,7 @@ const Sidebar = () => {
 	};
 
 	const handleSelect = async selectedUser => {
+		dispatch({type: 'CHANGE_USER', payload: selectedUser});
 		const combinedId =
 			user.uid > selectedUser.uid
 				? user.uid + selectedUser.uid

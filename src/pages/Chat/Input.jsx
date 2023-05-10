@@ -1,10 +1,59 @@
 import React, {useState} from 'react';
 import {Box, TextField, InputAdornment} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import useAuth from '../../hooks/useAuth';
+import useChat from '../../hooks/useChat';
+import {arrayUnion, doc, serverTimestamp, updateDoc} from 'firebase/firestore';
+import {db} from '../../firebase';
+import moment from 'moment';
 
 const Input = () => {
-	const [content, setContent] = useState('');
-	const [error, setError] = useState('');
+	const {user} = useAuth();
+	const {data} = useChat();
+	const [text, setText] = useState('');
+
+	const handleSend = async () => {
+		if (text.trim() !== '') {
+			const timeStamp = new Date();
+			let minutes = 0;
+
+			if (timeStamp.getMinutes() > 9) minutes = timeStamp.getMinutes();
+			else minutes = '0' + timeStamp.getMinutes();
+
+			let date =
+				moment().format('DD.MM.YY ') +
+				`${timeStamp.getHours()}` +
+				':' +
+				`${minutes}`;
+
+			setText('');
+
+			await updateDoc(doc(db, 'chats', data.chatId), {
+				messages: arrayUnion({
+					id: new Date().getTime(),
+					text,
+					senderId: user.uid,
+					date,
+				}),
+			});
+
+			await updateDoc(doc(db, 'userChats', user.uid), {
+				[data.chatId + '.lastMessage']: text,
+				[data.chatId + '.date']: serverTimestamp(),
+			});
+
+			await updateDoc(doc(db, 'userChats', data.user.uid), {
+				[data.chatId + '.lastMessage']: text,
+				[data.chatId + '.date']: serverTimestamp(),
+			});
+		}
+	};
+
+	const handleKey = e => {
+		if (e.key === 'Enter') {
+			handleSend();
+		}
+	};
 
 	return (
 		<Box
@@ -25,6 +74,7 @@ const Input = () => {
 					endAdornment: (
 						<InputAdornment
 							position='start'
+							onClick={handleSend}
 							sx={{
 								cursor: 'pointer',
 								paddingLeft: '5px',
@@ -39,10 +89,9 @@ const Input = () => {
 					),
 				}}
 				fullWidth
-				// onKeyDown={addPostHandler}
-				onChange={e => setContent(e.target.value)}
-				value={content}
-				error={!!error}
+				onChange={e => setText(e.target.value)}
+				value={text}
+				onKeyDown={handleKey}
 				placeholder='Написати повідомлення..'
 			/>
 		</Box>

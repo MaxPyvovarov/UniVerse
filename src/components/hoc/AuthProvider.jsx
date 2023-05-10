@@ -4,7 +4,7 @@ export const AuthContext = createContext({});
 
 const AuthProvider = ({children}) => {
 	const [user, setUser] = useState(
-		JSON.parse(localStorage.getItem('user')) || null
+		JSON.parse(sessionStorage.getItem('user')) || null
 	);
 
 	const login = newUser => {
@@ -13,7 +13,7 @@ const AuthProvider = ({children}) => {
 
 	const logout = () => {
 		setUser(null);
-		localStorage.removeItem('user');
+		sessionStorage.removeItem('user');
 	};
 
 	const value = {user, login, logout};

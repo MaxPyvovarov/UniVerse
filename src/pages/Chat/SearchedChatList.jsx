@@ -35,7 +35,7 @@ const SearchedChatList = ({list, handleSelect}) => {
 							{contact.displayName}
 						</Typography>
 						<Typography variant='p' fontSize='1rem'>
-							Привіт!
+							{contact?.lastMessage}
 						</Typography>
 					</div>
 				</Box>

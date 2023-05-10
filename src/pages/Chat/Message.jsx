@@ -1,10 +1,22 @@
+import React, {useEffect, useRef} from 'react';
 import {Avatar, Box, Typography} from '@mui/material';
-import React from 'react';
+import useAuth from '../../hooks/useAuth';
+import useChat from '../../hooks/useChat';
 
-const Message = ({isSent}) => {
+const Message = ({msg}) => {
+	const {user} = useAuth();
+	const {data} = useChat();
+	console.log(msg);
+
+	const ref = useRef();
+
+	useEffect(() => {
+		ref.current?.scrollIntoView({behavior: 'smooth'});
+	}, [msg]);
+
 	return (
 		<>
-			{isSent ? (
+			{msg.senderId !== user.uid ? (
 				<Box
 					sx={{
 						display: 'flex',
@@ -13,6 +25,7 @@ const Message = ({isSent}) => {
 						alignItems: 'flex-start',
 						mb: 2,
 					}}
+					ref={ref}
 				>
 					<Box
 						sx={{
@@ -22,12 +35,9 @@ const Message = ({isSent}) => {
 							gap: '3px',
 						}}
 					>
-						<Avatar
-							src='https://img.freepik.com/premium-vector/portrait-of-a-young-man-with-beard-and-hair-style-male-avatar-vector-illustration_266660-423.jpg'
-							sx={{width: 48, height: 48}}
-						/>
+						<Avatar src={data.user.photoURL} sx={{width: 48, height: 48}} />
 						<Typography component='p' sx={{fontSize: 14, color: '#999'}}>
-							08.05.23 14:54
+							{msg.date}
 						</Typography>
 					</Box>
 					<Box sx={{display: 'flex', maxWidth: '70%'}}>
@@ -40,7 +50,7 @@ const Message = ({isSent}) => {
 								mt: 1,
 							}}
 						>
-							Привіт!
+							{msg.text}
 						</Typography>
 					</Box>
 				</Box>
@@ -53,6 +63,7 @@ const Message = ({isSent}) => {
 						mb: 2,
 						alignItems: 'flex-start',
 					}}
+					ref={ref}
 				>
 					<Box
 						sx={{
@@ -62,12 +73,9 @@ const Message = ({isSent}) => {
 							gap: '3px',
 						}}
 					>
-						<Avatar
-							src='https://img.freepik.com/premium-vector/bearded-man-avatar-man-vector-portrait_9385-36.jpg'
-							sx={{width: 48, height: 48}}
-						/>
+						<Avatar src={user.photoURL} sx={{width: 48, height: 48}} />
 						<Typography component='p' sx={{fontSize: 14, color: '#999'}}>
-							08.05.23 11:23
+							{msg.date}
 						</Typography>
 					</Box>
 					<Box sx={{display: 'flex', maxWidth: '70%'}}>
@@ -81,7 +89,7 @@ const Message = ({isSent}) => {
 								mt: 1,
 							}}
 						>
-							Добрий день
+							{msg.text}
 						</Typography>
 					</Box>
 				</Box>

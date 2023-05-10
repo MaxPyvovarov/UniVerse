@@ -156,19 +156,22 @@ const Documents = () => {
 					</Typography>
 				</Box>
 			)}
-			<Box
-				sx={{
-					display: 'flex',
-					flexDirection: 'column',
-					gap: '20px',
-					overflowY: 'scroll',
-					height: '100%',
-					paddingRight: '10px',
-				}}
-			>
-				{documents.length > 0 &&
-					documents.map(doc => <DocumentsListItem key={doc._id} doc={doc} />)}
-			</Box>
+			{documents.length > 0 && (
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						gap: '20px',
+						overflowY: 'scroll',
+						height: '100%',
+						paddingRight: '10px',
+					}}
+				>
+					{documents.map(doc => (
+						<DocumentsListItem key={doc._id} doc={doc} />
+					))}
+				</Box>
+			)}
 		</Box>
 	);
 };
