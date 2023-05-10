@@ -28,7 +28,7 @@ const DocumentsListItem = ({doc}) => {
 				xhr.send();
 			})
 			.catch(error => {
-				console.log(error);
+				console.error(error);
 			});
 	};
 
