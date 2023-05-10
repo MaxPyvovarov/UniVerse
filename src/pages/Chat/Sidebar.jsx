@@ -57,13 +57,10 @@ const Sidebar = () => {
 	};
 
 	const handleSelect = async selectedUser => {
-		console.log('user', user.uid);
-		console.log('selectedUser', selectedUser.uid);
 		const combinedId =
 			user.uid > selectedUser.uid
 				? user.uid + selectedUser.uid
 				: selectedUser.uid + user.uid;
-		console.log(combinedId);
 		try {
 			const res = await getDoc(doc(db, 'chats', combinedId));
 

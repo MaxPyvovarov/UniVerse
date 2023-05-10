@@ -162,6 +162,8 @@ const Documents = () => {
 					flexDirection: 'column',
 					gap: '20px',
 					overflowY: 'scroll',
+					height: '100%',
+					paddingRight: '10px',
 				}}
 			>
 				{documents.length > 0 &&

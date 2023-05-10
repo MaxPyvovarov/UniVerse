@@ -45,7 +45,6 @@ const Header = () => {
 		<AppBar position='sticky' color='info' sx={{p: {xs: 1, md: 'none'}}}>
 			<Container maxWidth='xl'>
 				<Toolbar disableGutters sx={{justifyContent: 'space-between'}}>
-					{/* <FormatUnderlinedIcon sx={{display: {xs: 'none', md: 'flex'}}} /> */}
 					<Typography
 						variant='h6'
 						noWrap
