@@ -3,7 +3,14 @@ import {Box, TextField, InputAdornment} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import useAuth from '../../hooks/useAuth';
 import useChat from '../../hooks/useChat';
-import {arrayUnion, doc, serverTimestamp, updateDoc} from 'firebase/firestore';
+import {
+	arrayUnion,
+	doc,
+	serverTimestamp,
+	updateDoc,
+	getDoc,
+	setDoc,
+} from 'firebase/firestore';
 import {db} from '../../firebase';
 import moment from 'moment';
 
@@ -28,24 +35,52 @@ const Input = () => {
 
 			setText('');
 
-			await updateDoc(doc(db, 'chats', data.chatId), {
-				messages: arrayUnion({
-					id: new Date().getTime(),
-					text,
-					senderId: user.uid,
-					date,
-				}),
-			});
+			try {
+				const res = await getDoc(doc(db, 'chats', data.chatId));
 
-			await updateDoc(doc(db, 'userChats', user.uid), {
-				[data.chatId + '.lastMessage']: text,
-				[data.chatId + '.date']: serverTimestamp(),
-			});
+				if (!res.exists()) {
+					await setDoc(doc(db, 'chats', data.chatId), {messages: []});
 
-			await updateDoc(doc(db, 'userChats', data.user.uid), {
-				[data.chatId + '.lastMessage']: text,
-				[data.chatId + '.date']: serverTimestamp(),
-			});
+					await updateDoc(doc(db, 'userChats', user.uid), {
+						[data.chatId + '.userInfo']: {
+							uid: data.user.uid,
+							displayName: data.user.displayName,
+							photoURL: data.user.photoURL,
+						},
+						[data.chatId + '.date']: serverTimestamp(),
+					});
+
+					await updateDoc(doc(db, 'userChats', data.user.uid), {
+						[data.chatId + '.userInfo']: {
+							uid: user.uid,
+							displayName: user.displayName,
+							photoURL: user.photoURL,
+						},
+						[data.chatId + '.date']: serverTimestamp(),
+					});
+				} else {
+					await updateDoc(doc(db, 'userChats', user.uid), {
+						[data.chatId + '.lastMessage']: text,
+						[data.chatId + '.date']: serverTimestamp(),
+					});
+
+					await updateDoc(doc(db, 'userChats', data.user.uid), {
+						[data.chatId + '.lastMessage']: text,
+						[data.chatId + '.date']: serverTimestamp(),
+					});
+				}
+
+				await updateDoc(doc(db, 'chats', data.chatId), {
+					messages: arrayUnion({
+						id: new Date().getTime(),
+						text,
+						senderId: user.uid,
+						date,
+					}),
+				});
+			} catch (error) {
+				console.error(error);
+			}
 		}
 	};
 

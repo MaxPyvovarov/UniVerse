@@ -8,11 +8,14 @@ import {db} from '../../firebase';
 const Messages = () => {
 	const [messages, setMessages] = useState([]);
 	const {data} = useChat();
+	console.log(data);
 
 	useEffect(() => {
+		setMessages([]);
 		const unsub = onSnapshot(doc(db, 'chats', data.chatId), doc => {
-			doc.exists() && setMessages(doc.data().messages);
+			doc.exists() ? setMessages(doc.data().messages) : setMessages([]);
 		});
+		console.log(messages);
 
 		return () => unsub();
 	}, [data.chatId]);
@@ -20,7 +23,7 @@ const Messages = () => {
 	return (
 		<Box
 			sx={{
-				padding: '10px',
+				padding: '15px',
 				backgroundColor: '#fff',
 				overflowY: 'scroll',
 				height: '100%',

@@ -2,6 +2,7 @@ import {Avatar, Box, Typography} from '@mui/material';
 import React from 'react';
 
 const SearchedChatList = ({list, handleSelect}) => {
+	console.log(list);
 	return (
 		<Box
 			sx={{

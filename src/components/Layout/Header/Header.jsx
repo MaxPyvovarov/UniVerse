@@ -20,11 +20,13 @@ import {Link} from 'react-router-dom';
 
 import useAuth from '../../../hooks/useAuth';
 import pagesData from './pagesData';
+import useChat from '../../../hooks/useChat';
 
 const Header = () => {
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
 	const {user, logout} = useAuth();
+	const {dispatch} = useChat();
 
 	const handleOpenNavMenu = event => {
 		setAnchorElNav(event.currentTarget);
@@ -217,7 +219,12 @@ const Header = () => {
 							</MenuItem>
 							<MenuItem onClick={logout}>
 								<LogoutOutlinedIcon sx={{mr: 0.5}} />
-								<Typography textAlign='center'>Вийти</Typography>
+								<Typography
+									textAlign='center'
+									onClick={() => dispatch({type: 'RESET_USER'})}
+								>
+									Вийти
+								</Typography>
 							</MenuItem>
 						</Menu>
 					</Box>

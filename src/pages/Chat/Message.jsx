@@ -6,7 +6,6 @@ import useChat from '../../hooks/useChat';
 const Message = ({msg}) => {
 	const {user} = useAuth();
 	const {data} = useChat();
-	console.log(msg);
 
 	const ref = useRef();
 

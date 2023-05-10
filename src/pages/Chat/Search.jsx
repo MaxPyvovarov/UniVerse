@@ -18,6 +18,7 @@ const Search = ({handleSearch}) => {
 			}}
 		>
 			<TextField
+				value={username}
 				InputProps={{
 					startAdornment: (
 						<InputAdornment

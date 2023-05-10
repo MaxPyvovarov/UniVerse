@@ -1,7 +1,11 @@
 import {Avatar, Box, Typography} from '@mui/material';
 import React from 'react';
+import useChat from '../../hooks/useChat';
 
 const ChatList = ({list, handleSelect}) => {
+	const {data} = useChat();
+	console.log('data', data);
+	console.log('list', list);
 	return (
 		<Box
 			sx={{
@@ -19,7 +23,7 @@ const ChatList = ({list, handleSelect}) => {
 							display: 'flex',
 							alignItems: 'center',
 							gap: '7px',
-							backgroundColor: '#eee',
+							backgroundColor: contact[0] === data.chatId ? '#bbb' : '#eee',
 							padding: '16px 8px',
 							borderBottom: '1px solid #ccc',
 							transition: 'background-color .2s ease-in-out',
