@@ -33,7 +33,6 @@ const ChatList = ({list, handleSelect}) => {
 						key={contact[0]}
 						onClick={() => handleSelect(contact[1].userInfo)}
 					>
-						{console.log(contact)}
 						<Avatar
 							src={contact[1]?.userInfo.photoURL}
 							sx={{width: 56, height: 56}}

@@ -2,10 +2,12 @@ import React, {useEffect, useRef} from 'react';
 import {Avatar, Box, Typography} from '@mui/material';
 import useAuth from '../../hooks/useAuth';
 import useChat from '../../hooks/useChat';
+import {useNavigate} from 'react-router-dom';
 
 const Message = ({msg}) => {
 	const {user} = useAuth();
 	const {data} = useChat();
+	const navigate = useNavigate();
 
 	const ref = useRef();
 
@@ -34,7 +36,11 @@ const Message = ({msg}) => {
 							gap: '3px',
 						}}
 					>
-						<Avatar src={data.user.photoURL} sx={{width: 48, height: 48}} />
+						<Avatar
+							src={data.user.photoURL}
+							sx={{width: 48, height: 48, cursor: 'pointer'}}
+							onClick={() => navigate(`/profile/${data.user.uid}`)}
+						/>
 						<Typography component='p' sx={{fontSize: 14, color: '#999'}}>
 							{msg.date}
 						</Typography>
@@ -72,7 +78,11 @@ const Message = ({msg}) => {
 							gap: '3px',
 						}}
 					>
-						<Avatar src={user.photoURL} sx={{width: 48, height: 48}} />
+						<Avatar
+							src={user.photoURL}
+							sx={{width: 48, height: 48, cursor: 'pointer'}}
+							onClick={() => navigate(`/profile/${user.uid}`)}
+						/>
 						<Typography component='p' sx={{fontSize: 14, color: '#999'}}>
 							{msg.date}
 						</Typography>
