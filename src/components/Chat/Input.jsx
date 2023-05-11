@@ -48,6 +48,7 @@ const Input = () => {
 							photoURL: data.user.photoURL,
 						},
 						[data.chatId + '.date']: serverTimestamp(),
+						[data.chatId + '.lastMessage']: text,
 					});
 
 					await updateDoc(doc(db, 'userChats', data.user.uid), {
@@ -57,6 +58,7 @@ const Input = () => {
 							photoURL: user.photoURL,
 						},
 						[data.chatId + '.date']: serverTimestamp(),
+						[data.chatId + '.lastMessage']: text,
 					});
 				} else {
 					await updateDoc(doc(db, 'userChats', user.uid), {

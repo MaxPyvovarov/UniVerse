@@ -4,8 +4,6 @@ import useChat from '../../hooks/useChat';
 
 const ChatList = ({list, handleSelect}) => {
 	const {data} = useChat();
-	console.log('data', data);
-	console.log('list', list);
 	return (
 		<Box
 			sx={{
@@ -35,6 +33,7 @@ const ChatList = ({list, handleSelect}) => {
 						key={contact[0]}
 						onClick={() => handleSelect(contact[1].userInfo)}
 					>
+						{console.log(contact)}
 						<Avatar
 							src={contact[1]?.userInfo.photoURL}
 							sx={{width: 56, height: 56}}

@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar from './Sidebar';
-import MainChat from './MainChat';
+import Sidebar from '../components/Chat/Sidebar';
+import MainChat from '../components/Chat/MainChat';
 import {Box} from '@mui/material';
 
 const ChatPage = () => {

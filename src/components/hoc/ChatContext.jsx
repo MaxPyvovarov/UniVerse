@@ -13,7 +13,7 @@ const ChatProvider = ({children}) => {
 
 	const chatReducer = (state, action) => {
 		switch (action && action.type) {
-			case 'CHANGE_USER':
+			case 'SELECT_USER':
 				return {
 					user: action.payload,
 					chatId:
@@ -30,7 +30,6 @@ const ChatProvider = ({children}) => {
 	};
 
 	const [state, dispatch] = useReducer(chatReducer, INITIAL_STATE);
-	console.log('state', state);
 
 	return (
 		<ChatContext.Provider value={{data: state, dispatch}}>

@@ -1,5 +1,4 @@
 import {createContext, useState} from 'react';
-import useChat from '../../hooks/useChat';
 
 export const AuthContext = createContext({});
 

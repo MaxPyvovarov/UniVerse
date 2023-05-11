@@ -3,10 +3,10 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Layout from './components/Layout/Layout';
-import Home from './pages/Home/Home';
+import Home from './pages/Home';
 import useAuth from './hooks/useAuth';
-import Documents from './pages/Documents/Documents';
-import ChatPage from './pages/Chat/ChatPage';
+import Documents from './pages/Documents';
+import ChatPage from './pages/ChatPage';
 import Groups from './pages/Groups';
 import Profile from './pages/Profile';
 

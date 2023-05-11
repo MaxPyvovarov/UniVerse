@@ -6,11 +6,11 @@ import FindInPageIcon from '@mui/icons-material/FindInPage';
 import {onSnapshot, collection, orderBy, query} from 'firebase/firestore';
 import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';
 import {doc, setDoc} from 'firebase/firestore';
-import {db, storage} from '../../firebase';
-import useAuth from '../../hooks/useAuth';
+import {db, storage} from '../firebase';
+import useAuth from '../hooks/useAuth';
 import moment from 'moment/moment';
 
-import DocumentsListItem from './DocumentsListItem';
+import DocumentsListItem from '../components/Documents/DocumentsListItem';
 
 const docTypes = [
 	'application/pdf',
@@ -101,9 +101,10 @@ const Documents = () => {
 					display: 'flex',
 					justifyContent: 'space-between',
 					alignItems: 'center',
+					mb: 4,
 				}}
 			>
-				<Typography component='h1' variant='h3' marginBottom={4}>
+				<Typography component='h1' variant='h3'>
 					Документи
 				</Typography>
 

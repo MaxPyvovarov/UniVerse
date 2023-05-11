@@ -27,6 +27,7 @@ const Sidebar = () => {
 			const unsub = onSnapshot(doc(db, 'userChats', user.uid), doc => {
 				setList(doc.data());
 			});
+
 			return () => unsub();
 		};
 
@@ -50,13 +51,13 @@ const Sidebar = () => {
 				});
 				setSearchedList(response);
 			} catch (error) {
-				console.log(error);
+				console.error(error);
 			}
 		}
 	};
 
 	const handleSelect = async selectedUser => {
-		dispatch({type: 'CHANGE_USER', payload: selectedUser});
+		dispatch({type: 'SELECT_USER', payload: selectedUser});
 	};
 
 	return (
