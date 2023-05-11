@@ -80,12 +80,21 @@ const Register = () => {
 								email: data.email,
 								photoURL: url,
 							});
-
-							await setDoc(doc(db, 'userChats', user.uid), {});
 						}
 					);
 				});
+			} else {
+				await updateProfile(user, {
+					displayName,
+				});
+
+				await setDoc(doc(db, 'users', user.uid), {
+					displayName,
+					uid: user.uid,
+					email: data.email,
+				});
 			}
+			await setDoc(doc(db, 'userChats', user.uid), {});
 
 			navigate('/login', {state: true});
 		} catch (error) {

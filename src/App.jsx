@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import useAuth from './hooks/useAuth';
 import Documents from './pages/Documents';
 import ChatPage from './pages/ChatPage';
-import Groups from './pages/Groups';
+import People from './pages/People';
 import Profile from './pages/Profile';
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
 					<Route path='/' element={<Layout />}>
 						<Route index element={<Home />} />
 						<Route path='/chat' element={<ChatPage />} />
-						<Route path='/groups' element={<Groups />} />
+						<Route path='/people' element={<People />} />
 						<Route path='/documents' element={<Documents />} />
 						<Route path='/profile/:id' element={<Profile />} />
 						<Route path='*' element={<Home />} />

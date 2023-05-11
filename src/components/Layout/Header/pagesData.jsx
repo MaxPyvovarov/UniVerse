@@ -9,8 +9,8 @@ const pagesData = [
 		icon: () => <ChatIcon sx={{width: 26, height: 26}} />,
 	},
 	{
-		title: 'Спільноти',
-		link: '/groups',
+		title: 'Люди',
+		link: '/people',
 		icon: () => <GroupIcon sx={{width: 26, height: 26}} />,
 	},
 	{
