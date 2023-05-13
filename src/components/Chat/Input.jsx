@@ -41,11 +41,13 @@ const Input = () => {
 				if (!res.exists()) {
 					await setDoc(doc(db, 'chats', data.chatId), {messages: []});
 
+					console.log('data', data);
+
 					await updateDoc(doc(db, 'userChats', user.uid), {
 						[data.chatId + '.userInfo']: {
 							uid: data.user.uid,
 							displayName: data.user.displayName,
-							photoURL: data.user.photoURL,
+							photoURL: data.user.photoURL || null,
 						},
 						[data.chatId + '.date']: serverTimestamp(),
 						[data.chatId + '.lastMessage']: text,
@@ -55,7 +57,7 @@ const Input = () => {
 						[data.chatId + '.userInfo']: {
 							uid: user.uid,
 							displayName: user.displayName,
-							photoURL: user.photoURL,
+							photoURL: user.photoURL || null,
 						},
 						[data.chatId + '.date']: serverTimestamp(),
 						[data.chatId + '.lastMessage']: text,
@@ -107,6 +109,7 @@ const Input = () => {
 				InputProps={{
 					sx: {
 						bgcolor: '#f9f9f9',
+						pr: 1,
 					},
 					endAdornment: (
 						<InputAdornment

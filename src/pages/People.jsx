@@ -28,8 +28,6 @@ const People = () => {
 			setPeople(response);
 			setIsLoading(false);
 		});
-		console.log(people);
-
 		return () => unsub();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps

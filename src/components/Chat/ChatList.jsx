@@ -31,18 +31,19 @@ const ChatList = ({list, handleSelect}) => {
 							},
 						}}
 						key={contact[0]}
-						onClick={() => handleSelect(contact[1].userInfo)}
+						onClick={() => handleSelect(contact[1]?.userInfo)}
 					>
+						{console.log(contact)}
 						<Avatar
-							src={contact[1]?.userInfo.photoURL}
+							src={contact[1]?.userInfo?.photoURL}
 							sx={{width: 56, height: 56}}
 						/>
 						<div>
 							<Typography variant='h6' fontSize='1.1rem'>
-								{contact[1]?.userInfo.displayName}
+								{contact[1]?.userInfo?.displayName}
 							</Typography>
 							<Typography variant='p' fontSize='1rem'>
-								{contact[1]?.lastMessage.slice(0, 30)}
+								{contact[1]?.lastMessage?.slice(0, 30)}
 							</Typography>
 						</div>
 					</Box>

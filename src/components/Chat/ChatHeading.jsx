@@ -19,7 +19,7 @@ const ChatHeading = () => {
 			}}
 		>
 			<Avatar
-				src={data.user.photoURL}
+				src={data.user?.photoURL}
 				sx={{height: 56, width: 56, cursor: 'pointer'}}
 				onClick={() =>
 					navigate(`/profile/${data.user.uid}`, {state: data.user.uid})

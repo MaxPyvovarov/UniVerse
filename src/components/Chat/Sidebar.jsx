@@ -57,7 +57,7 @@ const Sidebar = () => {
 	};
 
 	const handleSelect = async selectedUser => {
-		dispatch({type: 'SELECT_USER', payload: selectedUser});
+		await dispatch({type: 'SELECT_USER', payload: selectedUser});
 	};
 
 	return (
