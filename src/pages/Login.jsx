@@ -1,21 +1,26 @@
 import {useState} from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import OutlinedInput from '@mui/material/OutlinedInput';
+import {
+	Avatar,
+	Button,
+	TextField,
+	Grid,
+	Box,
+	Typography,
+	OutlinedInput,
+	InputAdornment,
+	IconButton,
+	FormControl,
+	FormHelperText,
+	InputLabel,
+	Alert,
+} from '@mui/material';
+
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import {Alert} from '@mui/material';
-import {FormHelperText} from '@mui/material';
+
 import {useForm} from 'react-hook-form';
 import {Link, useLocation} from 'react-router-dom';
+
 import {auth} from '../firebase';
 import useAuth from '../hooks/useAuth';
 import {signInWithEmailAndPassword} from 'firebase/auth';
@@ -159,16 +164,9 @@ const Login = () => {
 						>
 							Увійти
 						</Button>
-						<Grid container>
-							<Grid item xs>
-								<Link href='#' variant='body2'>
-									{'Забули пароль?'}
-								</Link>
-							</Grid>
-							<Grid item>
-								<Link to='/'>{'Реєстрація'}</Link>
-							</Grid>
-						</Grid>
+						<Box textAlign='right'>
+							<Link to='/'>{'Реєстрація'}</Link>
+						</Box>
 					</Box>
 				</Box>
 			</Box>
