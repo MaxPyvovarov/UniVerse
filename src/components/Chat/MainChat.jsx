@@ -8,8 +8,6 @@ import useChat from '../../hooks/useChat';
 const MainChat = () => {
 	const {data} = useChat();
 
-	console.log(data);
-
 	return (
 		<Box
 			sx={{

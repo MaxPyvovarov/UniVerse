@@ -60,7 +60,7 @@ const AddPost = () => {
 			<Box
 				sx={{
 					borderRadius: '10px',
-					mb: 5,
+					mb: 3,
 				}}
 			>
 				<TextField

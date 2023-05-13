@@ -16,6 +16,9 @@ const Home = () => {
 		<Box
 			sx={{
 				padding: '15px 10px',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'column',
 			}}
 		>
 			<Typography component='h1' variant='h3' marginBottom={4}>
