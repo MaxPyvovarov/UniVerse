@@ -100,6 +100,7 @@ const Documents = () => {
 					padding: '16px 16px 0',
 					display: 'flex',
 					justifyContent: 'space-between',
+					gap: '10px',
 					alignItems: 'center',
 					mb: 4,
 				}}
