@@ -28,6 +28,7 @@ const People = () => {
 			setPeople(response);
 			setIsLoading(false);
 		});
+		console.log(people);
 
 		return () => unsub();
 
@@ -52,7 +53,12 @@ const People = () => {
 				}}
 			>
 				<Typography component='h1' variant='h3'>
-					Люди
+					Люди{' '}
+					{people.length > 0 && (
+						<span style={{opacity: 0.6, fontSize: '2.5rem'}}>
+							({people.length})
+						</span>
+					)}
 				</Typography>
 			</Box>
 			{isLoading && (

@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Typography, CircularProgress, CardMedia} from '@mui/material';
+import {Box, Typography, CircularProgress, Avatar} from '@mui/material';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 import {MarkAsUnread} from '@mui/icons-material';
 
-import useAuth from '../hooks/useAuth';
 import {useLocation} from 'react-router-dom';
 
 import {
@@ -17,7 +16,6 @@ import {db} from '../firebase';
 
 const Profile = () => {
 	const location = useLocation();
-	const {user} = useAuth();
 	const [userProfile, setUserProfile] = useState(null);
 	const [posts, setPosts] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
@@ -36,7 +34,7 @@ const Profile = () => {
 			setUserProfile(response[0]);
 		});
 
-		const qPosts = query(collection(db, 'posts'), orderBy('_id', 'desc'));
+		const qPosts = query(collection(db, 'posts'), orderBy('_id'));
 		const unsubPosts = onSnapshot(qPosts, doc => {
 			let response = [];
 			doc.forEach(d => {
@@ -81,13 +79,13 @@ const Profile = () => {
 					}}
 				>
 					<Box sx={{flex: 1, display: 'flex', flexDirection: 'column'}}>
-						<CardMedia
-							component='img'
+						<Avatar
+							variant='square'
+							sx={{height: 300, width: 300}}
 							height='350'
 							src={userProfile.photoURL}
 							alt={userProfile.displayName}
 						/>
-						{userProfile.uid === user.uid && <button>btn</button>}
 						<Typography sx={{fontSize: 20, fontWeight: 700, mt: 2}}>
 							{userProfile.displayName}
 						</Typography>
@@ -101,7 +99,9 @@ const Profile = () => {
 							flexDirection: 'column',
 						}}
 					>
-						<Typography variant='h4'>Останні пости</Typography>
+						<Typography variant='h4' marginBottom={2}>
+							Останні пости
+						</Typography>
 						{posts.length > 0 ? (
 							<Box
 								sx={{
