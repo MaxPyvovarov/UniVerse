@@ -142,6 +142,7 @@ const Profile = () => {
 									display: 'flex',
 									flexDirection: 'column',
 									alignItems: 'center',
+									opacity: 0.6,
 								}}
 							>
 								<MarkAsUnread sx={{width: 100, height: 100}} />

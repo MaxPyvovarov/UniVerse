@@ -173,6 +173,10 @@ const Register = () => {
 									value: 2,
 									message: "Ім'я не може бути коротше 2 символів",
 								},
+								maxLength: {
+									value: 15,
+									message: "Занадто довге ім'я",
+								},
 								pattern: {
 									value: /^[а-яієїґ'][^ъыэёЪЫЭЁ]+$/i,
 									message: 'Можна використовувати тільки українські літери',
@@ -192,6 +196,10 @@ const Register = () => {
 								minLength: {
 									value: 2,
 									message: 'Прізвище не може бути коротше 2 символів',
+								},
+								maxLength: {
+									value: 15,
+									message: 'Занадто довге прізвище',
 								},
 								pattern: {
 									value: /^[а-яієїґ'][^ъыэёЪЫЭЁ]+$/i,

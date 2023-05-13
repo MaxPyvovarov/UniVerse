@@ -42,7 +42,7 @@ const ChatList = ({list, handleSelect}) => {
 								{contact[1]?.userInfo.displayName}
 							</Typography>
 							<Typography variant='p' fontSize='1rem'>
-								{contact[1]?.lastMessage}
+								{contact[1]?.lastMessage.slice(0, 30)}
 							</Typography>
 						</div>
 					</Box>
