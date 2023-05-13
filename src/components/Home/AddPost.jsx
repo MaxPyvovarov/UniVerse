@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {TextField, Box} from '@mui/material';
+import {TextField, Box, InputAdornment} from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 
 import useAuth from '../../hooks/useAuth';
 import {addDoc, collection} from 'firebase/firestore';
@@ -12,13 +13,8 @@ const AddPost = () => {
 	const [error, setError] = useState('');
 	const [isAllowedToSend, setIsAllowedToSend] = useState(true);
 
-	const addPostHandler = async e => {
-		if (
-			e.key === 'Enter' &&
-			user &&
-			e.target.value.trim() !== '' &&
-			isAllowedToSend
-		) {
+	const handleSend = async () => {
+		if (user && content.trim() !== '' && isAllowedToSend) {
 			const timeStamp = new Date();
 			let minutes = 0;
 
@@ -55,6 +51,12 @@ const AddPost = () => {
 		}
 	};
 
+	const handleKey = e => {
+		if (e.key === 'Enter') {
+			handleSend();
+		}
+	};
+
 	return (
 		<>
 			<Box
@@ -69,12 +71,28 @@ const AddPost = () => {
 					variant='outlined'
 					InputProps={{
 						sx: {
-							borderRadius: '20px',
 							bgcolor: '#f9f9f9',
+							pr: 1,
 						},
+						endAdornment: (
+							<InputAdornment
+								position='start'
+								onClick={handleSend}
+								sx={{
+									cursor: 'pointer',
+									pl: '5px',
+									transition: 'color .2s ease-in-out',
+									'&:hover': {
+										color: 'primary.main',
+									},
+								}}
+							>
+								<SendIcon />
+							</InputAdornment>
+						),
 					}}
 					sx={{width: '100%'}}
-					onKeyDown={addPostHandler}
+					onKeyDown={handleKey}
 					onChange={e => setContent(e.target.value)}
 					value={content}
 					helperText={'Пост можна робити раз на 30 с'}
