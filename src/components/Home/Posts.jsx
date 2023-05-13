@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Box, Avatar, Typography} from '@mui/material';
-import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import {onSnapshot, collection, orderBy, query} from 'firebase/firestore';
@@ -10,6 +10,7 @@ import {MarkAsUnread} from '@mui/icons-material';
 const Posts = () => {
 	const [posts, setPosts] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const q = query(collection(db, 'posts'), orderBy('_id', 'desc'));
@@ -67,14 +68,19 @@ const Posts = () => {
 							padding: '15px',
 						}}
 					>
-						<Link
-							to={`/profile/${post.author.uid}`}
-							style={{
+						<Box
+							onClick={() =>
+								navigate(`/profile/${post.author.uid}`, {
+									state: post.author.uid,
+								})
+							}
+							sx={{
 								display: 'flex',
 								alignItems: 'center',
 								color: '#111',
 								textDecoration: 'none',
-								marginBottom: 12,
+								mb: '12px',
+								cursor: 'pointer',
 							}}
 						>
 							<Avatar
@@ -90,7 +96,7 @@ const Posts = () => {
 									{post.createdAt}
 								</Typography>
 							</Box>
-						</Link>
+						</Box>
 
 						<Typography sx={{wordWrap: 'break-word'}}>
 							{post.content}

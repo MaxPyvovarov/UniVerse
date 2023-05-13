@@ -8,7 +8,7 @@ import {
 	CardMedia,
 } from '@mui/material';
 
-import {onSnapshot, collection, query, orderBy} from 'firebase/firestore';
+import {onSnapshot, collection, query} from 'firebase/firestore';
 import {db} from '../firebase';
 import {useNavigate} from 'react-router-dom';
 
@@ -88,7 +88,9 @@ const People = () => {
 											'0px 5px 10px -1px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);',
 									},
 								}}
-								onClick={() => navigate(`/profile/${person.uid}`)}
+								onClick={() =>
+									navigate(`/profile/${person.uid}`, {state: person.uid})
+								}
 								key={person.uid}
 							>
 								{person.photoURL && (

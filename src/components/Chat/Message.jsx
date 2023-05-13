@@ -39,7 +39,9 @@ const Message = ({msg}) => {
 						<Avatar
 							src={data.user.photoURL}
 							sx={{width: 48, height: 48, cursor: 'pointer'}}
-							onClick={() => navigate(`/profile/${data.user.uid}`)}
+							onClick={() =>
+								navigate(`/profile/${data.user.uid}`, {state: data.user.uid})
+							}
 						/>
 						<Typography component='p' sx={{fontSize: 14, color: '#999'}}>
 							{msg.date}
@@ -81,7 +83,9 @@ const Message = ({msg}) => {
 						<Avatar
 							src={user.photoURL}
 							sx={{width: 48, height: 48, cursor: 'pointer'}}
-							onClick={() => navigate(`/profile/${user.uid}`)}
+							onClick={() =>
+								navigate(`/profile/${user.uid}`, {state: user.uid})
+							}
 						/>
 						<Typography component='p' sx={{fontSize: 14, color: '#999'}}>
 							{msg.date}

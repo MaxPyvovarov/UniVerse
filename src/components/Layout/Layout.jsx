@@ -14,7 +14,7 @@ const Layout = () => {
 					display: 'flex',
 					justifyContent: 'center',
 					padding: '20px 15px',
-					background: "url('background.png')",
+					background: "url('/background.png')",
 				}}
 			>
 				<Box

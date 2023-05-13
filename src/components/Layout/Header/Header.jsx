@@ -20,7 +20,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import useAuth from '../../../hooks/useAuth';
 import pagesData from './pagesData';
@@ -31,6 +31,7 @@ const Header = () => {
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
 	const {user, logout} = useAuth();
 	const {dispatch} = useChat();
+	const navigate = useNavigate();
 
 	const handleOpenNavMenu = event => {
 		setAnchorElNav(event.currentTarget);
@@ -215,8 +216,9 @@ const Header = () => {
 								<AccountCircleOutlinedIcon sx={{mr: 0.5}} />
 								<Typography
 									sx={{color: 'inherit', textDecoration: 'none'}}
-									component={Link}
-									to={`/profile/${user.uid}`}
+									onClick={() =>
+										navigate(`/profile/${user.uid}`, {state: user.uid})
+									}
 								>
 									Профіль
 								</Typography>
