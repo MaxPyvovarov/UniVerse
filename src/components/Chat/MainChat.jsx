@@ -1,9 +1,15 @@
 import {Box} from '@mui/material';
 import React from 'react';
+import ChatHeading from './ChatHeading';
 import Messages from './Messages';
 import Input from './Input';
+import useChat from '../../hooks/useChat';
 
 const MainChat = () => {
+	const {data} = useChat();
+
+	console.log(data);
+
 	return (
 		<Box
 			sx={{
@@ -13,8 +19,13 @@ const MainChat = () => {
 				flexShrink: 0,
 			}}
 		>
-			<Messages />
-			<Input />
+			{data.chatId !== 'null' && (
+				<>
+					<ChatHeading />
+					<Messages />
+					<Input />
+				</>
+			)}
 		</Box>
 	);
 };

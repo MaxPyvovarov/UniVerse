@@ -69,24 +69,23 @@ const Posts = () => {
 						}}
 					>
 						<Box
-							onClick={() =>
-								navigate(`/profile/${post.author.uid}`, {
-									state: post.author.uid,
-								})
-							}
 							sx={{
 								display: 'flex',
 								alignItems: 'center',
 								color: '#111',
 								textDecoration: 'none',
 								mb: '12px',
-								cursor: 'pointer',
 							}}
 						>
 							<Avatar
 								src={post.author.photoURL}
 								alt={post.author.displayName}
-								sx={{width: 50, height: 50, mr: 2}}
+								sx={{width: 50, height: 50, mr: 2, cursor: 'pointer'}}
+								onClick={() =>
+									navigate(`/profile/${post.author.uid}`, {
+										state: post.author.uid,
+									})
+								}
 							/>
 							<Box>
 								<Typography sx={{fontSize: 14}}>

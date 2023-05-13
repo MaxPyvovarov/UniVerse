@@ -186,7 +186,7 @@ const Header = () => {
 								<Avatar
 									alt={user.displayName}
 									src={user?.photoURL}
-									sx={{width: 48, height: 48}}
+									sx={{width: 56, height: 56}}
 								/>
 							</IconButton>
 						</Tooltip>

@@ -26,7 +26,6 @@ const Profile = () => {
 				response.push(d.data());
 			});
 
-			setIsLoading(false);
 			setUserProfile(response[0]);
 		});
 
@@ -42,6 +41,7 @@ const Profile = () => {
 				.reverse();
 
 			setPosts(filteredPosts);
+			setIsLoading(false);
 		});
 
 		return () => {
