@@ -41,8 +41,6 @@ const Input = () => {
 				if (!res.exists()) {
 					await setDoc(doc(db, 'chats', data.chatId), {messages: []});
 
-					console.log('data', data);
-
 					await updateDoc(doc(db, 'userChats', user.uid), {
 						[data.chatId + '.userInfo']: {
 							uid: data.user.uid,
